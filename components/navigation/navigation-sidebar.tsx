@@ -3,10 +3,13 @@ import { db } from "@/lib/db";
 import { redirect } from "next/navigation";
 import { NavigationAction } from "./navigation-action";
 import { Separator } from "@/components/ui/separator";
+import { ModeToggle } from "@/components/shares/mode-toggle";
+import { ScrollArea } from "@/components/ui/scroll-area";
+import { NavigationItem } from "./navigation-item";
 
 export const NavigationSidebar = async () => {
   const profile = await currentProfile();
-  console.log(profile);
+  // console.log(profile);
 
   if (!profile) {
     redirect("/");
@@ -22,13 +25,28 @@ export const NavigationSidebar = async () => {
     },
   });
 
-  console.log(servers);
+  // console.log(servers);
 
   return (
     <div className="space-y-4 flex flex-col items-center h-full text-primary w-full dark:bg-[#1E1F22] bg-[#E3E5E8] py-3">
-      <NavigationAction/>
-      <Separator className="h-[2px] bg-zinc-300 dark:bg-zinc-700 rounded-md w-10 mx-auto "/>
-    {/* <div>hi</div> */}
+      <NavigationAction />
+      <Separator className="h-[2px] bg-zinc-300 dark:bg-zinc-700 rounded-md w-10 mx-auto " />
+
+      <ScrollArea className="w-full flex-1">
+        {servers.map((server) => (
+          <div key={server.id} className="mb-4">
+            <NavigationItem
+              id={server.id}
+              name={server.name}
+              imgUrl={server.imgUrl}
+            />
+          </div>
+        ))}
+      </ScrollArea>
+
+      <div className="flex flex-col items-center pb-3 mt-auto gap-y-4">
+        <ModeToggle />
+      </div>
     </div>
   );
 };

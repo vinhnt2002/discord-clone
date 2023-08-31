@@ -4,6 +4,8 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import "./globals.css";
 import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
+import { ModalProvider } from "@/providers/modals-provider";
+import { cn } from "@/lib/utils";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
@@ -20,8 +22,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <ClerkProvider>
-        <body className={font.className}>
-          <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
+        <body className={cn(font.className, "bg-white dark:bg-[#313338]")}>
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem={false}
+            storageKey="discord-theme"
+          >
+            <ModalProvider />
             {children}
           </ThemeProvider>
         </body>
