@@ -6,6 +6,7 @@ import { Separator } from "@/components/ui/separator";
 import { ModeToggle } from "@/components/shares/mode-toggle";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { NavigationItem } from "./navigation-item";
+import { UserButton } from "@clerk/nextjs";
 
 export const NavigationSidebar = async () => {
   const profile = await currentProfile();
@@ -26,7 +27,6 @@ export const NavigationSidebar = async () => {
   });
 
   // console.log(servers);
-
   return (
     <div className="space-y-4 flex flex-col items-center h-full text-primary w-full dark:bg-[#1E1F22] bg-[#E3E5E8] py-3">
       <NavigationAction />
@@ -46,7 +46,16 @@ export const NavigationSidebar = async () => {
 
       <div className="flex flex-col items-center pb-3 mt-auto gap-y-4">
         <ModeToggle />
+        <UserButton
+          afterSignOutUrl="/"
+          appearance={{
+            elements: {
+              avatarBox: "h-[48px] w-[48px]",
+            },
+          }}
+        />
       </div>
     </div>
+
   );
 };

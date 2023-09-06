@@ -34,6 +34,8 @@ export const FileUpload: React.FC<FileUploadProps> = ({
     );
   }
 
+  
+
   return (
     <UploadDropzone
     endpoint={endpoint}

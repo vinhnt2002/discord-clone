@@ -31,7 +31,7 @@ import { ServerValidation } from "@/lib/form-validation/Validation";
 import { useEffect, useState } from "react";
 import { FileUpload } from "../shares/file-upload";
 
-const InitialModal = () => {
+export const InitialModal = () => {
   const [isMounted, setIsMounted] = useState(false);
   const router = useRouter();
 
@@ -131,4 +131,3 @@ const InitialModal = () => {
   );
 };
 
-export default InitialModal;

@@ -35,12 +35,14 @@ import { ServerValidation } from "@/lib/form-validation/Validation";
 //hook
 import { useModal } from "@/hooks/use-modal-store";
 
-export const CreateServerModal = () => {
+export const EditServerModal = () => {
   const router = useRouter();
 
-  const { isOpen, onClose, type } = useModal();
-  const isModalOpen = isOpen && type === "createServer";
-  
+  const { isOpen, onClose, type, data } = useModal();
+  const { server } = data;
+  // console.log(server);
+  const isModalOpen = isOpen && type === "editServer";
+
   const form = useForm<z.infer<typeof ServerValidation>>({
     resolver: zodResolver(ServerValidation),
     defaultValues: {
@@ -49,12 +51,19 @@ export const CreateServerModal = () => {
     },
   });
 
+  useEffect(() => {
+    if (server) {
+      form.setValue("name", server.name);
+      form.setValue("imgUrl", server.imgUrl);
+    }
+  }, [server, form]);
+
   const isLoading = form.formState.isSubmitting;
 
   const onSubmit = async (values: z.infer<typeof ServerValidation>) => {
-    console.log(values);
+    // console.log(values);
     try {
-      await axios.post("/api/servers", values);
+      await axios.patch(`/api/servers/${server?.id}`, values);
 
       form.reset();
       onClose();
@@ -65,7 +74,6 @@ export const CreateServerModal = () => {
   };
 
   const handleClose = () => {
-    form.reset();
     onClose();
   };
 
@@ -128,7 +136,7 @@ export const CreateServerModal = () => {
             </div>
             <DialogFooter className="bg-gray-100 py-6 px-4">
               <Button variant="primary" disabled={isLoading}>
-                Create
+                Change
               </Button>
             </DialogFooter>
           </form>

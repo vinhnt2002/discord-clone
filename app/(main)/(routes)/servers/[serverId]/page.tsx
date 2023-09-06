@@ -1,5 +1,7 @@
-export const page = async ({ params }: { params: { serverId: string } }) => {
-  return <div>serverId: {params.serverId}</div>;
+import React from "react";
+
+const page = () => {
+  return <div>page</div>;
 };
 
 export default page;
