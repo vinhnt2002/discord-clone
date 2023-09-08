@@ -44,30 +44,35 @@ import { ChannelValidation } from "@/lib/form-validation/Validation";
 //hook
 import { useModal } from "@/hooks/use-modal-store";
 
-export const CreateChannelModal = () => {
+export const EditChannelModal = () => {
   const router = useRouter();
   const params = useParams();
 
-  const { isOpen, onClose, type, data } = useModal();
-  const isModalOpen = isOpen && type === "createChannel";
-  const { channelType } = data;
-  console.log(channelType);
+  const { isOpen, onClose, type , data} = useModal();
+  const isModalOpen = isOpen && type === "editChannel";
+
+  const {channel, server} = data
+
   const form = useForm<z.infer<typeof ChannelValidation>>({
     resolver: zodResolver(ChannelValidation),
     defaultValues: {
       name: "",
-      type: channelType || ChannelType.TEXT,
+      type: ChannelType.TEXT,
     },
   });
 
   useEffect(() => {
-    if(channelType){
-      form.setValue('type' , channelType)
-    }else{
-      form.setValue('type' , ChannelType.TEXT)
-
+    if(channel){
+      form.setValue('name', channel?.name )
+      form.setValue('type', channel.type)
     }
-  }, [channelType, form]);
+  },[form, channel])
+
+  
+
+  // useEffect(() => {
+  //   if()
+  // }, []);
 
   const isLoading = form.formState.isSubmitting;
 
@@ -75,12 +80,12 @@ export const CreateChannelModal = () => {
     console.log(values);
     try {
       const url = qs.stringifyUrl({
-        url: "/api/channels",
+        url: `/api/channels/${channel?.id}`,
         query: {
-          serverId: params?.serverId,
-        },
-      });
-      await axios.post(url, values);
+          serverId: params?.serverId
+        }
+      })
+      await axios.patch(url, values);
 
       form.reset();
       onClose();
@@ -100,7 +105,7 @@ export const CreateChannelModal = () => {
       <DialogContent className="bg-white text-black p-0 overflow-hidden">
         <DialogHeader className="pt-8 px-6">
           <DialogTitle className="text-2xl text-center font-bold">
-            Create Channel
+            Edit Channel
           </DialogTitle>
         </DialogHeader>
         {/* form  */}
@@ -125,7 +130,7 @@ export const CreateChannelModal = () => {
                         {...field}
                       />
                     </FormControl>
-                    <FormMessage />
+                    <FormMessage/>
                   </FormItem>
                 )}
               />
@@ -159,7 +164,7 @@ export const CreateChannelModal = () => {
                         ))}
                       </SelectContent>
                     </Select>
-                    <FormMessage />
+                    <FormMessage/>
                   </FormItem>
                 )}
               />
@@ -175,3 +180,4 @@ export const CreateChannelModal = () => {
     </Dialog>
   );
 };
+
