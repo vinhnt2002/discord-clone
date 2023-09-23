@@ -5,8 +5,6 @@ import { MemberRole } from "@prisma/client";
 import { db } from "@/lib/db";
 import { currentProfile } from "@/lib/current-profile";
 
-
-
 export async function POST(req: Request) {
   try {
     const { name, imgUrl } = await req.json();
@@ -18,25 +16,21 @@ export async function POST(req: Request) {
     }
 
     const server = await db.server.create({
-        data: {
-            profileId: profile.id,
-            name, 
-            imgUrl,
-            inviteCode: uuidv4(),
-            channels:{
-                create: [
-                    {name: 'general', profileId: profile.id}
-                ]
-            },
-            members:{
-                create:[
-                    {profileId: profile.id, role: MemberRole.ADMIN}
-                ]
-            }
-        }
-    })
+      data: {
+        profileId: profile.id,
+        name,
+        imgUrl,
+        inviteCode: uuidv4(),
+        channels: {
+          create: [{ name: "general", profileId: profile.id }],
+        },
+        members: {
+          create: [{ profileId: profile.id, role: MemberRole.ADMIN }],
+        },
+      },
+    });
 
-    return NextResponse.json(server)
+    return NextResponse.json(server);
   } catch (error) {
     console.log("SERVER_POST", error);
     return new NextResponse("Internal Error", { status: 500 });

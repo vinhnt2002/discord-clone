@@ -16,3 +16,7 @@ export const ChannelValidation = z.object({
     }),
   type: z.nativeEnum(ChannelType),
 });
+
+export const ChatInputValidation = z.object({
+  content: z.string().min(1)
+})

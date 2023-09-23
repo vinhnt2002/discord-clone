@@ -36,15 +36,15 @@ export const ServerHeader: React.FC<ServerHeaderProps> = ({ server, role }) => {
   const isModerator = isAmin || role === MemberRole.MODERATOR;
 
   return (
-    <DropdownMenu>
+    <DropdownMenu >
       <DropdownMenuTrigger asChild className="focus:outline-none">
         <button
-          className="w-full h-12 flex items-center text-base font-semibold px-3 border-neutral-200  
+          className="w-full justify-start md:justify-evenly h-12 flex items-center text-base font-semibold pl-3 border-neutral-200  
         dark:border-neutral-800 border-b-2 hover:bg-zinc-700/10 dark:hover:bg-zinc-700/50 transition capitalize
         "
         >
           {server.name}
-          <ChevronDown className="h-5 m-5 ml-auto" />
+          <ChevronDown className="h-5 m-5 ml-0 md:ml-auto " />
         </button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-56 text-xs space-y-[2px] font-medium text-black dark:text-neutral-400 ">

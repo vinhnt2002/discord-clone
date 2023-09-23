@@ -34,7 +34,7 @@ export const ServerSection: React.FC<ServerSectionProps> = ({
       {role !== MemberRole.GUEST && sectionType === "channels" && (
         <ActionTooltip label="Create Channels" side="top">
           <button 
-          onClick={() => onOpen('createChannel', {server})}
+          onClick={() => onOpen('createChannel', {server,channelType})}
           className="ml-auto text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition ">
             <Plus className="h-4 w-4 " />
           </button>
@@ -44,7 +44,7 @@ export const ServerSection: React.FC<ServerSectionProps> = ({
       {role === MemberRole.ADMIN && sectionType === 'members' && (
         <ActionTooltip label="Manage Member" side="right">
           <button
-          onClick={() => onOpen('members' , {server})}
+          onClick={() => onOpen('members' , {server,channelType})}
           className="text-zinc-500 hover:text-zinc-600 dark:text-zinc-400 dark:hover:text-zinc-300 transition ml-auto"
           >
               <Settings className="h-4 w-4"/>

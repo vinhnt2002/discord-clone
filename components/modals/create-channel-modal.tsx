@@ -51,7 +51,7 @@ export const CreateChannelModal = () => {
   const { isOpen, onClose, type, data } = useModal();
   const isModalOpen = isOpen && type === "createChannel";
   const { channelType } = data;
-  console.log(channelType);
+  // console.log(channelType);
   const form = useForm<z.infer<typeof ChannelValidation>>({
     resolver: zodResolver(ChannelValidation),
     defaultValues: {
