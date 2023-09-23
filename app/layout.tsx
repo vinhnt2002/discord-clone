@@ -6,6 +6,7 @@ import type { Metadata } from "next";
 import { Open_Sans } from "next/font/google";
 import { ModalProvider } from "@/providers/modals-provider";
 import { cn } from "@/lib/utils";
+import { SocketIoProvider } from "@/providers/socket-provider";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
@@ -29,8 +30,10 @@ export default function RootLayout({
             enableSystem={false}
             storageKey="discord-theme"
           >
-            <ModalProvider />
-            {children}
+            <SocketIoProvider>
+              <ModalProvider />
+              {children}
+            </SocketIoProvider>
           </ThemeProvider>
         </body>
       </ClerkProvider>
