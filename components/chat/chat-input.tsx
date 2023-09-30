@@ -5,20 +5,29 @@ import { ChatInputValidation } from "@/lib/form-validation/Validation";
 import { Input } from "@/components/ui/input";
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
-import { z } from "zod";
+import * as z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Plus } from "lucide-react";
 
+import qs from "query-string";
+
+import axios from "axios";
 import EmojiPicker from "@/components/shares/emoji-picker";
+import { useRouter } from "next/navigation";
+import { useModal } from "@/hooks/use-modal-store";
 
 interface ChatInputProps {
-  apiUrl?: string;
-  query?: Record<string, any>;
+  apiUrl: string;
+  query: Record<string, any>;
   name: string;
-  type: "conversation" | "channels";
+  type: "conversation" | "channel";
 }
 
 const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
+  const router = useRouter();
+
+  const { onOpen } = useModal();
+
   const form = useForm<z.infer<typeof ChatInputValidation>>({
     resolver: zodResolver(ChatInputValidation),
     defaultValues: {
@@ -26,7 +35,24 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
     },
   });
 
-  const onSubmit = async() => {};
+  // console.log(apiUrl);
+  // console.log(query);
+
+  const onSubmit = async (values: z.infer<typeof ChatInputValidation>) => {
+    try {
+      const url = qs.stringifyUrl({
+        url: "/api/socket/messages",
+        query,
+      });
+
+      await axios.post(url, values);
+      form.reset();
+      router.refresh();
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   const isLoading = form.formState.isSubmitting;
 
@@ -42,7 +68,7 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                 <div className="relative pb-6 p-4">
                   <button
                     //TO DO Onclick
-                    onClick={() => {}}
+                    onClick={() => onOpen("messageFile", { apiUrl, query })}
                     type="button"
                     className="absolute top-7 left-8 h-[24px] w-[24px] bg-zinc-500 dark:bg-zinc-400 hover:bg-zinc-600 dark:hover:bg-zinc-300 transition rounded-full p-1 flex items-center justify-center"
                   >
@@ -51,17 +77,15 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
                   <Input
                     disabled={isLoading}
                     className="px-14 py-6 bg-zinc-200/90 dark:bg-zinc-700/75 border-none border-0 focus-visible:ring-0 focus-visible:ring-offset-0 text-zinc-600 dark:text-zinc-200"
-                    placeholder="Chat here"
+                    placeholder={`Message ${type === 'conversation' ? name : '#' + name}`}
                     {...field}
                   />
 
-                  {/* check form  */}
-
-                  {/* <div className="absolute top-7 right-8">
+                  <div className="absolute top-7 right-8">
                     <EmojiPicker 
                     onChange={(emoji: string) => field.onChange(`${field.value} ${emoji}`)}
                     />
-                  </div> */}
+                  </div>
                 </div>
               </FormControl>
             </FormItem>

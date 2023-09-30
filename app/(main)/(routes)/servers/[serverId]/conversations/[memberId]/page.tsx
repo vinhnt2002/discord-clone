@@ -1,9 +1,5 @@
-import React from 'react'
-
 const ConversationsIdPage = () => {
-  return (
-    <div>ConversationsIdPage</div>
-  )
-}
+  return <div>ConversationsIdPage</div>;
+};
 
-export default ConversationsIdPage
+export default ConversationsIdPage;

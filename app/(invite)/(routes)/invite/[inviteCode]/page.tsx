@@ -3,7 +3,7 @@ import { db } from "@/lib/db";
 import { redirectToSignIn } from "@clerk/nextjs";
 import { redirect } from "next/navigation";
 
- const InviteCodePage = async ({
+const InviteCodePage = async ({
   params,
 }: {
   params: { inviteCode: string };
@@ -36,9 +36,11 @@ import { redirect } from "next/navigation";
     },
     data: {
       members: {
-        create: {
-          profileId: profile.id,
-        },
+        create: [
+          {
+            profileId: profile.id,
+          },
+        ],
       },
     },
   });
@@ -49,6 +51,5 @@ import { redirect } from "next/navigation";
 
   return null;
 };
-
 
 export default InviteCodePage;

@@ -7,6 +7,7 @@ import { Open_Sans } from "next/font/google";
 import { ModalProvider } from "@/providers/modals-provider";
 import { cn } from "@/lib/utils";
 import { SocketIoProvider } from "@/providers/socket-provider";
+import { QueryProvider } from "@/providers/query-provider";
 
 const font = Open_Sans({ subsets: ["latin"] });
 
@@ -32,7 +33,9 @@ export default function RootLayout({
           >
             <SocketIoProvider>
               <ModalProvider />
-              {children}
+                <QueryProvider>
+                  {children}
+                </QueryProvider>
             </SocketIoProvider>
           </ThemeProvider>
         </body>

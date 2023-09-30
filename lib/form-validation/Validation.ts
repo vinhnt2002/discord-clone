@@ -6,7 +6,6 @@ export const ServerValidation = z.object({
   imgUrl: z.string().min(1, { message: "Hãy thêm ít nhất 1 ảnh" }),
 });
 
-
 export const ChannelValidation = z.object({
   name: z
     .string()
@@ -18,5 +17,11 @@ export const ChannelValidation = z.object({
 });
 
 export const ChatInputValidation = z.object({
-  content: z.string().min(1)
-})
+  content: z.string().min(1),
+});
+
+export const MessageFileValidation = z.object({
+  fileUrl: z.string().min(1, {
+    message: "Attachment is required",
+  }),
+});
