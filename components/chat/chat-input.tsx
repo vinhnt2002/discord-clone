@@ -41,7 +41,7 @@ const ChatInput = ({ apiUrl, query, name, type }: ChatInputProps) => {
   const onSubmit = async (values: z.infer<typeof ChatInputValidation>) => {
     try {
       const url = qs.stringifyUrl({
-        url: "/api/socket/messages",
+        url: "/api/socket/direct-messages",
         query,
       });
 

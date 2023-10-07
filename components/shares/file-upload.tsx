@@ -1,7 +1,10 @@
 "use client";
 
 import { UploadDropzone } from "@/lib/uploadthing";
-import "@uploadthing/react/styles.css";
+
+
+// here is the problem of sidebar bug remove it and move to global css
+// import "@uploadthing/react/styles.css";
 
 interface FileUploadProps {
   endpoint: "serverImage" | "serverMessage";

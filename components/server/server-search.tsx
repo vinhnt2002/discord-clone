@@ -55,7 +55,10 @@ export const ServerSearch: React.FC<ServerSearchProps> = ({ data }) => {
           Search
         </p>
         <kbd className="ml-auto pointer-events-none inline-flex items-center gap-1 bg-muted rounded border font-mono px-1.5 text-muted-foreground group-hover:text-muted-foreground/50">
-          <span className="text-xs">⌘</span>K
+          <span className="text-xs">
+            {/* ⌘ */}
+            &#8984;
+            </span>K
         </kbd>
       </button>
       <CommandDialog open={open} onOpenChange={setOpen}>
