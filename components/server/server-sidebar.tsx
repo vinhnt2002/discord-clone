@@ -14,6 +14,8 @@ import { Separator } from "../ui/separator";
 import { ServerSection } from "./server-section";
 import { ServerChannel } from "./server-channel";
 import { ServerMember } from "./server-member";
+import { Button } from "../ui/button";
+import { useModal } from "@/hooks/use-modal-store";
 
 interface ServerSidebarProps {
   serverId: string;
